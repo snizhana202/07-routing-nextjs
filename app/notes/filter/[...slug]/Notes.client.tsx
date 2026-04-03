@@ -11,7 +11,11 @@ import Pagination from "@/components/Pagination/Pagination";
 import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
 
-export default function NotesClient() {
+interface NotesClientProps {
+  tag: string;
+}
+
+export default function NotesClient({ tag }: NotesClientProps) {
   const [page, setPage] = useState(1);
   const [inputValue, setInputValue] = useState("");
   const [searchText, setSearchText] = useState("");
@@ -27,8 +31,8 @@ export default function NotesClient() {
   }, [inputValue, debouncedSearch]);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["notes", page, searchText],
-    queryFn: () => fetchNotes(page, 12, searchText),
+    queryKey: ["notes", tag, page, searchText],
+    queryFn: () => fetchNotes(page, 12, tag, searchText),
     placeholderData: (prevData) => prevData,
   });
 

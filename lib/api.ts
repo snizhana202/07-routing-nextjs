@@ -39,13 +39,14 @@ export interface FetchNoteResponse {
 export async function fetchNotes(
   page: number,
   perPage: number,
+  tag: string,
   search?: string,
 ): Promise<FetchNotesResponse> {
   try {
     const response: AxiosResponse<FetchNotesResponse> = await api.get(
       "/notes",
       {
-        params: { page, perPage, search },
+        params: { page, perPage, tag, search },
       },
     );
     return response.data;
@@ -91,21 +92,3 @@ export async function fetchNoteById(id: string): Promise<FetchNoteResponse> {
     throw error;
   }
 }
-
-export async function getNotes(categoryId?: string) {
-  const res = await axios.get<FetchNotesResponse>('/notes', {
-    params: { categoryId },
-  });
-  return res.data;
-};
-
-export async function getNote(id: Note['id']) {
-  const { data } = await api.get<Note>(`/notes/${id}`);
-  return data;
-}
-
-export async function getCategories() {
-  const { data } = await api.get<Category[]>('/categories');
-  return data;
-};
-

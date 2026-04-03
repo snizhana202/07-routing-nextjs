@@ -10,13 +10,13 @@ export default async function NotesSidebar() {
   return (
     <ul className={css.menuList}>
       <li className={css.menuItem}>
-        <Link href={`/notes/filters/all`} className={css.menuLink}>
+        <Link href={`/notes/filter/all`} className={css.menuLink}>
           All notes
         </Link>
       </li>
       {categories.map((category) => (
         <li key={category.id} className={css.menuItem}>
-          <Link href={`/notes/filters/${category.id}`} className={css.menuLink}>
+          <Link href={`/notes/filter/${category.id}`} className={css.menuLink}>
             {category.name}
           </Link>
         </li>
