@@ -2,29 +2,36 @@
 
 import css from "./NoteList.module.css";
 import type { Note } from "../../types/note";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteNote } from "@/lib/api";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
+import { deleteNote, fetchNotes } from "@/lib/api";
 import Link from "next/link";
 
 export interface NoteListProps {
-  notes: Note[];
+  category: string;
 }
 
-export default function NoteList({ notes }: NoteListProps) {
+export default function NoteList({ category }: NoteListProps) {
   const queryClient = useQueryClient();
 
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["notes", category],
+    queryFn: () => fetchNotes(1, 12, category),
+  });
+  
   const mutation = useMutation({
     mutationFn: (id: string) => deleteNote(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notes"] });
+      queryClient.invalidateQueries({ queryKey: ["notes", category] });
     },
   });
 
-  if (notes.length === 0) return null;
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Failed to load notes</p>;
+  if (!data || data.notes.length === 0) return null;
 
   return (
     <ul className={css.list}>
-      {notes.map((note) => (
+      {data.notes.map((note) => (
         <li key={note.id} className={css.listItem}>
           <h2 className={css.title}>{note.title}</h2>
           <p className={css.content}>{note.content}</p>

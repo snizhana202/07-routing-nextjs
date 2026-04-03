@@ -16,7 +16,6 @@ export default async function NotesFilters({ params }: NotesFiltersProps) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug ?? ["all"];
   const category = slug[0] === "all" ? "" : slug[0];
-  const response = await fetchNotes(1, 12, category);
 
   const queryClient = new QueryClient();
 
@@ -29,7 +28,7 @@ export default async function NotesFilters({ params }: NotesFiltersProps) {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="rounded-xl border border-border bg-surface p-8 shadow-sm">
         <h1>Notes List</h1>
-          <NoteList notes={response.notes} />
+          <NoteList category={category} />
       </div>
     </HydrationBoundary>
   );

@@ -56,14 +56,9 @@ export async function fetchNotes(
   }
 }
 
-export async function createNote(
-  data: CreateNoteData,
-): Promise<CreateNoteResponse> {
+export async function createNote(data: CreateNoteData): Promise<Note> {
   try {
-    const response: AxiosResponse<CreateNoteResponse> = await api.post(
-      "/notes",
-      data,
-    );
+    const response: AxiosResponse<Note> = await api.post("/notes", data);
     return response.data;
   } catch (error) {
     console.error("Failed to create note:", error);
@@ -71,11 +66,9 @@ export async function createNote(
   }
 }
 
-export async function deleteNote(id: string): Promise<DeleteNoteResponse> {
+export async function deleteNote(id: string): Promise<Note> {
   try {
-    const response: AxiosResponse<DeleteNoteResponse> = await api.delete(
-      `/notes/${id}`,
-    );
+    const response: AxiosResponse<Note> = await api.delete(`/notes/${id}`);
     return response.data;
   } catch (error) {
     console.error("Failed to delete note:", error);
@@ -83,9 +76,9 @@ export async function deleteNote(id: string): Promise<DeleteNoteResponse> {
   }
 }
 
-export async function fetchNoteById(id: string): Promise<FetchNoteResponse> {
+export async function fetchNoteById(id: string): Promise<Note> {
   try {
-    const response: AxiosResponse<FetchNoteResponse> = await api.get(`/notes/${id}`);
+    const response: AxiosResponse<Note> = await api.get(`/notes/${id}`);
     return response.data;
   } catch (error) {
     console.error("Failed to fetch note details:", error);
@@ -97,4 +90,3 @@ export async function fetchCategories(): Promise<Category[]> {
   const { data } = await api.get<Category[]>("/categories");
   return data;
 }
-
