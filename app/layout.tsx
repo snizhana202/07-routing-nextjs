@@ -21,14 +21,21 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children
-}: Readonly<{ children: React.ReactNode; }>) {
+  children,
+  modal,
+}: Readonly<{ 
+  children: React.ReactNode;
+  modal: React.ReactNode;
+}>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
         <TanStackProvider>
           <Header />
-          <main>{children}</main>
+          <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-10">
+            {children}
+            {modal}
+          </main>
           <Footer />
         </TanStackProvider>
       </body>

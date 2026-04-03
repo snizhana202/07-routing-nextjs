@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { AxiosResponse } from "axios";
 import type { Note, NoteTag } from "../types/note";
+import type { Category } from "../types/category";
 
 const BASE_URL = "https://notehub-public.goit.study/api";
 const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
@@ -90,3 +91,21 @@ export async function fetchNoteById(id: string): Promise<FetchNoteResponse> {
     throw error;
   }
 }
+
+export async function getNotes(categoryId?: string) {
+  const res = await axios.get<FetchNotesResponse>('/notes', {
+    params: { categoryId },
+  });
+  return res.data;
+};
+
+export async function getNote(id: Note['id']) {
+  const { data } = await api.get<Note>(`/notes/${id}`);
+  return data;
+}
+
+export async function getCategories() {
+  const { data } = await api.get<Category[]>('/categories');
+  return data;
+};
+

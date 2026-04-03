@@ -23,3 +23,9 @@ export default async function NotesPage() {
     </HydrationBoundary>
   );
 }
+
+// import { redirect } from "next/navigation";
+
+// export default function Notes() {
+//   redirect("/notes/filters/all");
+// }

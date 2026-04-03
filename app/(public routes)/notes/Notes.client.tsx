@@ -1,6 +1,6 @@
 "use client";
 
-import css from "../../components/NotePages/NotePages.module.css";
+import css from "@/components/NotePages/NotePages.module.css";
 import NoteList from "@/components/NoteList/NoteList";
 import { useQuery } from "@tanstack/react-query";
 import { fetchNotes } from "@/lib/api";
@@ -55,7 +55,7 @@ export default function NotesClient() {
 
       {data && <NoteList notes={data.notes} />}
       {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
+        <Modal>
           <NoteForm onCancel={() => setIsModalOpen(false)} />
         </Modal>
       )}

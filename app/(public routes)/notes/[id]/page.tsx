@@ -9,11 +9,11 @@ import { fetchNoteById } from "@/lib/api";
 import NoteDetailsClient from "./NoteDetails.client";
 
 type Props = {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 };
 
-const NoteDetails = async ({ params }: Props) => {
-  const { id } = await params;
+export default async function NoteDetails({ params }: Props) {
+  const { id } = params;
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
@@ -26,6 +26,6 @@ const NoteDetails = async ({ params }: Props) => {
       <NoteDetailsClient id={id} />
     </HydrationBoundary>
   );
-};
+}
 
-export default NoteDetails;
+
