@@ -6,13 +6,14 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchNoteById } from "@/lib/api";
 import css from "./NoteDetails.module.css";
 import { useRouter } from "next/navigation";
+import { Note } from "@/types/note";
 
 type Props = {
   id: string;
 };
 
 export default function NoteDetailsClient({ id }: Props) {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useQuery<Note>({
     queryKey: ["note", id],
     queryFn: () => fetchNoteById(id),
     refetchOnMount: false,
@@ -20,9 +21,9 @@ export default function NoteDetailsClient({ id }: Props) {
   const router = useRouter();
 
   if (isLoading) return <p>Loading, please wait...</p>;
-  if (error || !data?.note) return <p>Something went wrong.</p>;
+  if (error || !data) return <p>Something went wrong.</p>;
 
-  const note = data.note;
+  const note = data;
 
   const handleGoBack = () => {
     const isSure = confirm("Are you sure?");
