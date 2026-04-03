@@ -58,7 +58,7 @@ export default function NotesClient({ tag }: NotesClientProps) {
       {isLoading && <p>Loading...</p>}
       {error && <p>Error loading notes</p>}
 
-      {data && <NoteList notes={data.notes} />}
+      {data && <NoteList category={tag} />}
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
           <NoteForm onCancel={() => setIsModalOpen(false)} />
