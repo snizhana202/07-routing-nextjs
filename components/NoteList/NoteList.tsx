@@ -1,36 +1,30 @@
 // components/NoteList/NoteList.tsx
 
 import css from "./NoteList.module.css";
-import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
-import { deleteNote, fetchNotes } from "@/lib/api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteNote } from "@/lib/api";
 import Link from "next/link";
+import { Note } from "@/types/note";
 
 export interface NoteListProps {
-  category: string;
+  notes: Note[];
 }
 
-export default function NoteList({ category }: NoteListProps) {
+export default function NoteList({ notes }: NoteListProps) {
   const queryClient = useQueryClient();
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["notes", category],
-    queryFn: () => fetchNotes(1, 12, category),
-  });
-  
   const mutation = useMutation({
     mutationFn: (id: string) => deleteNote(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notes", category] });
+      queryClient.invalidateQueries({ queryKey: ["notes"] });
     },
   });
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Failed to load notes</p>;
-  if (!data || data.notes.length === 0) return null;
+  if (notes.length === 0) return null;
 
   return (
     <ul className={css.list}>
-      {data.notes.map((note) => (
+      {notes.map((note) => (
         <li key={note.id} className={css.listItem}>
           <h2 className={css.title}>{note.title}</h2>
           <p className={css.content}>{note.content}</p>
@@ -44,7 +38,7 @@ export default function NoteList({ category }: NoteListProps) {
               onClick={() => mutation.mutate(note.id)}
               disabled={mutation.isPending}
             >
-               {mutation.isPending ? "Deleting..." : "Delete"}
+              {mutation.isPending ? "Deleting..." : "Delete"}
             </button>
           </div>
         </li>

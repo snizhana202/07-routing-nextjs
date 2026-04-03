@@ -38,8 +38,8 @@ export interface FetchNoteResponse {
 
 export async function fetchNotes(
   page: number,
-  perPage: number,
-  tag: string,
+  perPage?: number,
+  tag?: string,
   search?: string,
 ): Promise<FetchNotesResponse> {
   try {
@@ -58,8 +58,8 @@ export async function fetchNotes(
 
 export async function createNote(data: CreateNoteData): Promise<Note> {
   try {
-    const response: AxiosResponse<Note> = await api.post("/notes", data);
-    return response.data;
+    const response: AxiosResponse<CreateNoteResponse> = await api.post("/notes", data);
+    return response.data.note;
   } catch (error) {
     console.error("Failed to create note:", error);
     throw error;
@@ -68,8 +68,8 @@ export async function createNote(data: CreateNoteData): Promise<Note> {
 
 export async function deleteNote(id: string): Promise<Note> {
   try {
-    const response: AxiosResponse<Note> = await api.delete(`/notes/${id}`);
-    return response.data;
+    const response: AxiosResponse<DeleteNoteResponse> = await api.delete(`/notes/${id}`);
+    return response.data.note;
   } catch (error) {
     console.error("Failed to delete note:", error);
     throw error;
@@ -78,8 +78,8 @@ export async function deleteNote(id: string): Promise<Note> {
 
 export async function fetchNoteById(id: string): Promise<Note> {
   try {
-    const response: AxiosResponse<Note> = await api.get(`/notes/${id}`);
-    return response.data;
+    const response: AxiosResponse<FetchNoteResponse> = await api.get(`/notes/${id}`);
+    return response.data.note;
   } catch (error) {
     console.error("Failed to fetch note details:", error);
     throw error;
