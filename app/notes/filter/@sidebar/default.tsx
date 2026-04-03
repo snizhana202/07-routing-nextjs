@@ -1,11 +1,11 @@
 // app/notes/filter/@sidebar/default.tsx
 
 import Link from "next/link";
-import { getCategories } from "@/lib/api";
+import { fetchCategories } from "@/lib/api";
 import css from "@/components/SidebarNotes/SidebarNotes.module.css";
 
 export default async function NotesSidebar() {
-  const categories = await getCategories();
+  const categories = await fetchCategories();
 
   return (
     <ul className={css.menuList}>

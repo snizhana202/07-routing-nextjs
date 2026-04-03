@@ -1,29 +1,5 @@
 // app/notes/filter/[...slug]/page.tsx
 
-// import { fetchNotes } from "@/lib/api";
-// import NoteList from "@/components/NoteList/NoteList";
-
-// interface NotesFiltersProps {
-//   params: { slug: string[] };
-// }
-
-// export default async function NotesFilters({ params }: NotesFiltersProps) {
-//   const { slug } = params;
-//   const category = slug[0] === "all" ? undefined : slug[0];
-//   const response = await fetchNotes(1, 12, category);
-
-//   return (
-//     <div className="rounded-xl border border-border bg-surface p-8 shadow-sm">
-//       <h1>Notes List</h1>
-//       {response?.notes?.length > 0 ? (
-//         <NoteList notes={response.notes} />
-//       ) : (
-//         <p>No notes found.</p>
-//       )}
-//     </div>
-//   );
-// }
-
 import {
   QueryClient,
   HydrationBoundary,
@@ -40,6 +16,7 @@ export default async function NotesFilters({ params }: NotesFiltersProps) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug ?? ["all"];
   const category = slug[0] === "all" ? "" : slug[0];
+  const response = await fetchNotes(1, 12, category);
 
   const queryClient = new QueryClient();
 
@@ -52,7 +29,7 @@ export default async function NotesFilters({ params }: NotesFiltersProps) {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="rounded-xl border border-border bg-surface p-8 shadow-sm">
         <h1>Notes List</h1>
-          <NoteList tag={category} />
+          <NoteList notes={response.notes} />
       </div>
     </HydrationBoundary>
   );

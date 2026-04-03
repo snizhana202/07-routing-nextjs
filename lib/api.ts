@@ -92,3 +92,9 @@ export async function fetchNoteById(id: string): Promise<FetchNoteResponse> {
     throw error;
   }
 }
+
+export async function fetchCategories(): Promise<Category[]> {
+  const { data } = await api.get<Category[]>("/categories");
+  return data;
+}
+

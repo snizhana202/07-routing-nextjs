@@ -1,3 +1,4 @@
+// app/notes/filter/[...slug]/Notes.client.tsx
 "use client";
 
 import css from "@/components/NotePages/NotePages.module.css";
@@ -59,7 +60,7 @@ export default function NotesClient({ tag }: NotesClientProps) {
 
       {data && <NoteList notes={data.notes} />}
       {isModalOpen && (
-        <Modal>
+        <Modal onClose={() => setIsModalOpen(false)}>
           <NoteForm onCancel={() => setIsModalOpen(false)} />
         </Modal>
       )}
