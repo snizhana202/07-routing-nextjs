@@ -57,3 +57,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.button {
+  align-self: flex-start;
+  padding: 6px 12px;
+  font-size: 14px;
+  color: #ffffff;
+  background-color: #0d6efd;
+  border: none;
+  cursor: pointer;
+}

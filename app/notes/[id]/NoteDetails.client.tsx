@@ -36,7 +36,9 @@ export default function NoteDetailsClient({ id }: Props) {
     <div className={css.container}>
       <div className={css.item}>
         <div className={css.header}>
-          <button onClick={handleGoBack}>Back</button>
+          <button onClick={handleGoBack} className={css.button}>
+            Back
+          </button>
           <h2>{note.title}</h2>
         </div>
         <p className={css.tag}>{note.tag}</p>

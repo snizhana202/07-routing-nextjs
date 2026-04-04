@@ -5,9 +5,11 @@ type Props = {
 
 export default function NotesLayout({ sidebar, children }: Props) {
   return (
-    <section className="flex flex-col gap-6 md:flex-row">
-      <aside className="shrink-0 md:w-52">{sidebar}</aside>
-      <div className="min-w-0 flex-1 md:border-l md:border-border md:pl-6">
+    <section style={{ display: "grid", gridTemplateColumns: "208px 1fr", gap: "0" }}>
+      <aside style={{ backgroundColor: "#444" }}>
+        {sidebar}
+      </aside>
+      <div style={{ borderLeft: "1px solid #dee2e6", paddingLeft: "24px" }}>
         {children}
         </div>
     </section>

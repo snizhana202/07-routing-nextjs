@@ -82,8 +82,8 @@ export async function deleteNote(id: string): Promise<Note> {
 
 export async function fetchNoteById(id: string): Promise<Note> {
   try {
-    const response: AxiosResponse<FetchNoteResponse> = await api.get(`/notes/${id}`);
-    return response.data.note;
+    const response: AxiosResponse<Note> = await api.get(`/notes/${id}`);
+    return response.data;
   } catch (error) {
     console.error("Failed to fetch note details:", error);
     throw error;
