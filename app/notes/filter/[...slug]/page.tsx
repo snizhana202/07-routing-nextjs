@@ -9,11 +9,12 @@ import { fetchNotes } from "@/lib/api";
 import NotesClient from "@/app/notes/filter/[...slug]/Notes.client";
 
 interface NotesFiltersProps {
-  params: { slug: string[] };
+  params: Promise<{ slug: string[] }>;
 }
 
 export default async function NotesFilters({ params }: NotesFiltersProps) {
-  const slug = params?.slug ?? ["all"];
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug ?? ["all"];
   const category = slug[0] === "all" ? "" : slug[0];
 
   const queryClient = new QueryClient();
@@ -32,4 +33,3 @@ export default async function NotesFilters({ params }: NotesFiltersProps) {
     </HydrationBoundary>
   );
 }
-
