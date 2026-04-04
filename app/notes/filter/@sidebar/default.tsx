@@ -1,11 +1,10 @@
 // app/notes/filter/@sidebar/default.tsx
 
 import Link from "next/link";
-import { fetchCategories } from "@/lib/api";
 import css from "@/components/SidebarNotes/SidebarNotes.module.css";
 
-export default async function NotesSidebar() {
-  const categories = await fetchCategories();
+export default function NotesSidebar() {
+  const tags = ["Todo", "Work", "Personal", "Meeting", "Shopping"];
 
   return (
     <ul className={css.menuList}>
@@ -14,10 +13,10 @@ export default async function NotesSidebar() {
           All notes
         </Link>
       </li>
-      {categories.map((category) => (
-        <li key={category.id} className={css.menuItem}>
-          <Link href={`/notes/filter/${category.id}`} className={css.menuLink}>
-            {category.name}
+      {tags.map((tag) => (
+        <li key={tag} className={css.menuItem}>
+          <Link href={`/notes/filter/${tag}`} className={css.menuLink}>
+            {tag}
           </Link>
         </li>
       ))}

@@ -42,13 +42,18 @@ export async function fetchNotes(
   tag?: string,
   search?: string,
 ): Promise<FetchNotesResponse> {
-  try {
-    const response: AxiosResponse<FetchNotesResponse> = await api.get(
-      "/notes",
-      {
-        params: { page, perPage, tag, search },
-      },
-    );
+   try {
+    const params: Record<string, unknown> = {
+      page,
+      perPage,
+      search,
+      ...(tag && tag !== "all" && { tag }),
+    };
+
+    const response: AxiosResponse<FetchNotesResponse> = await api.get("/notes", {
+      params,
+    });
+
     return response.data;
   } catch (error) {
     console.error("Failed to fetch notes:", error);
@@ -86,7 +91,7 @@ export async function fetchNoteById(id: string): Promise<Note> {
   }
 }
 
-export async function fetchCategories(): Promise<Category[]> {
-  const { data } = await api.get<Category[]>("/categories");
-  return data;
-}
+// export async function fetchCategories(): Promise<Category[]> {
+//   const { data } = await api.get<Category[]>("/categories");
+//   return data;
+// }
